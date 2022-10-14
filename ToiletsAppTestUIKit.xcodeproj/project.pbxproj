@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4B3759B228F962E4002F633B /* ToiletTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3759B128F962E4002F633B /* ToiletTableViewCell.swift */; };
+		4B3759B528F96460002F633B /* UIViewPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3759B428F96460002F633B /* UIViewPreview.swift */; };
+		4B3759B728F96470002F633B /* UIViewControllerPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3759B628F96470002F633B /* UIViewControllerPreview.swift */; };
 		4B7BD6D428F765F200CEF11E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7BD6D328F765F200CEF11E /* AppDelegate.swift */; };
 		4B7BD6D628F765F200CEF11E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7BD6D528F765F200CEF11E /* SceneDelegate.swift */; };
 		4B7BD6D828F765F200CEF11E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7BD6D728F765F200CEF11E /* HomeViewController.swift */; };
@@ -17,6 +19,8 @@
 
 /* Begin PBXFileReference section */
 		4B3759B128F962E4002F633B /* ToiletTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToiletTableViewCell.swift; sourceTree = "<group>"; };
+		4B3759B428F96460002F633B /* UIViewPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewPreview.swift; sourceTree = "<group>"; };
+		4B3759B628F96470002F633B /* UIViewControllerPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerPreview.swift; sourceTree = "<group>"; };
 		4B7BD6D028F765F200CEF11E /* ToiletsAppTestUIKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToiletsAppTestUIKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B7BD6D328F765F200CEF11E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4B7BD6D528F765F200CEF11E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -37,6 +41,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B3759B328F96441002F633B /* UIKitPreviews */ = {
+			isa = PBXGroup;
+			children = (
+				4B3759B428F96460002F633B /* UIViewPreview.swift */,
+				4B3759B628F96470002F633B /* UIViewControllerPreview.swift */,
+			);
+			path = UIKitPreviews;
+			sourceTree = "<group>";
+		};
 		4B7BD6C728F765F200CEF11E = {
 			isa = PBXGroup;
 			children = (
@@ -56,6 +69,7 @@
 		4B7BD6D228F765F200CEF11E /* ToiletsAppTestUIKit */ = {
 			isa = PBXGroup;
 			children = (
+				4B3759B328F96441002F633B /* UIKitPreviews */,
 				4B7BD6D328F765F200CEF11E /* AppDelegate.swift */,
 				4B7BD6D528F765F200CEF11E /* SceneDelegate.swift */,
 				4B7BD6D728F765F200CEF11E /* HomeViewController.swift */,
@@ -137,6 +151,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B3759B528F96460002F633B /* UIViewPreview.swift in Sources */,
+				4B3759B728F96470002F633B /* UIViewControllerPreview.swift in Sources */,
 				4B3759B228F962E4002F633B /* ToiletTableViewCell.swift in Sources */,
 				4B7BD6D828F765F200CEF11E /* HomeViewController.swift in Sources */,
 				4B7BD6D428F765F200CEF11E /* AppDelegate.swift in Sources */,
