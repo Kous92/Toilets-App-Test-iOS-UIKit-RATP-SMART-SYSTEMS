@@ -19,7 +19,6 @@ class CoreDataService {
     func saveData(with toilets: [Toilet]) {
         // Dans une tâche de fond
         self.container?.performBackgroundTask { [weak self] (context) in
-            print("\n\n>>> Contenu sauvegardé:\n\(self?.fetchToilets(context: context).compactMap { $0.adresse } )")
             print("Lancement de la sauvegarde des données téléchargées.")
             
             if let count = self?.checkToilets(context: context), count > 0 {
@@ -29,7 +28,6 @@ class CoreDataService {
 
             self?.saveToiletsDataLocally(with: toilets, context: context)
             print("Sauvegarde terminée.")
-            // print("\n\n>>> Contenu sauvegardé:\n\(self?.fetchToilets(context: context))")
         }
     }
     

@@ -20,7 +20,7 @@ class MainCoordinator: Coordinator {
     var navigationController = UINavigationController()
     
     func start() {
-        let initialViewController = HomeViewController()
+        let initialViewController = ToiletListViewController()
         navigationController.navigationBar.barTintColor = UIColor(named: "ratp_jade_green")
         navigationController.navigationItem.title = "Accueil"
         navigationController.pushViewController(initialViewController, animated: false)

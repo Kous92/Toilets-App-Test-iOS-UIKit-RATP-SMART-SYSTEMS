@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  ToiletListViewController.swift
 //  ToiletsAppTestUIKit
 //
 //  Created by Koussaïla Ben Mamar on 12/10/2022.
@@ -9,7 +9,7 @@ import UIKit
 import CoreData
 import CoreLocation
 
-class HomeViewController: UIViewController {
+class ToiletListViewController: UIViewController {
     private var toilets = [Toilet]()
     private var filteredToilets = [Toilet]()
     var managedObjectContext: NSManagedObjectContext?
@@ -93,7 +93,7 @@ class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController {
+extension ToiletListViewController {
     
     func getData() {
         guard let context = managedObjectContext else {
@@ -155,7 +155,7 @@ extension HomeViewController {
     }
 }
 
-extension HomeViewController {
+extension ToiletListViewController {
     @objc private func refreshToiletData(_ sender: Any) {
         let service: APIService = NetworkService()
         service.fetch { [weak self] (response: Result<DataOutput, APIError>) in
@@ -175,7 +175,7 @@ extension HomeViewController {
     }
 }
 
-extension HomeViewController {
+extension ToiletListViewController {
     @objc func setReducedMobilityFilter(_ sender: Any) {
         if pmrFilterActive == false {
             reducedMobilityFilterButton.backgroundColor = .red
@@ -203,7 +203,7 @@ extension HomeViewController {
     }
 }
 
-extension HomeViewController: UITableViewDataSource {
+extension ToiletListViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // print("Toilettes: \(toilets.count)")
         return filteredToilets.count
@@ -243,7 +243,7 @@ extension HomeViewController: UITableViewDataSource {
     }
 }
 
-extension HomeViewController: UITableViewDelegate {
+extension ToiletListViewController: UITableViewDelegate {
     
 }
 
@@ -268,7 +268,7 @@ struct ViewControllerPreview: PreviewProvider {
             
             // Mode sombre (dark mode)
             UIViewControllerPreview {
-                let vc = HomeViewController()
+                let vc = ToiletListViewController()
                 guard let container = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer else {
                     return vc
                 }

@@ -25,7 +25,7 @@
 		4B72F36528FCB6DE00CD9DB8 /* ToiletDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B72F36428FCB6DE00CD9DB8 /* ToiletDataService.swift */; };
 		4B7BD6D428F765F200CEF11E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7BD6D328F765F200CEF11E /* AppDelegate.swift */; };
 		4B7BD6D628F765F200CEF11E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7BD6D528F765F200CEF11E /* SceneDelegate.swift */; };
-		4B7BD6D828F765F200CEF11E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7BD6D728F765F200CEF11E /* HomeViewController.swift */; };
+		4B7BD6D828F765F200CEF11E /* ToiletListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7BD6D728F765F200CEF11E /* ToiletListViewController.swift */; };
 		4B7BD6DD28F765F300CEF11E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B7BD6DC28F765F300CEF11E /* Assets.xcassets */; };
 		4B7BD6E028F765F300CEF11E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B7BD6DE28F765F300CEF11E /* LaunchScreen.storyboard */; };
 		4BE80BA928FF6818007331C1 /* GPSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE80BA828FF6818007331C1 /* GPSService.swift */; };
@@ -51,7 +51,7 @@
 		4B7BD6D028F765F200CEF11E /* ToiletsAppTestUIKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToiletsAppTestUIKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B7BD6D328F765F200CEF11E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4B7BD6D528F765F200CEF11E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4B7BD6D728F765F200CEF11E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		4B7BD6D728F765F200CEF11E /* ToiletListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToiletListViewController.swift; sourceTree = "<group>"; };
 		4B7BD6DC28F765F300CEF11E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B7BD6DF28F765F300CEF11E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4B7BD6E128F765F300CEF11E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -132,7 +132,7 @@
 				4B3759B328F96441002F633B /* UIKitPreviews */,
 				4B7BD6D328F765F200CEF11E /* AppDelegate.swift */,
 				4B7BD6D528F765F200CEF11E /* SceneDelegate.swift */,
-				4B7BD6D728F765F200CEF11E /* HomeViewController.swift */,
+				4B7BD6D728F765F200CEF11E /* ToiletListViewController.swift */,
 				4B7BD6DC28F765F300CEF11E /* Assets.xcassets */,
 				4B7BD6DE28F765F300CEF11E /* LaunchScreen.storyboard */,
 				4B7BD6E128F765F300CEF11E /* Info.plist */,
@@ -232,7 +232,7 @@
 				4B3759B228F962E4002F633B /* ToiletTableViewCell.swift in Sources */,
 				4B42D6ED28FEBC9B0030B83B /* ToiletEntityMethods.swift in Sources */,
 				4BE80BA928FF6818007331C1 /* GPSService.swift in Sources */,
-				4B7BD6D828F765F200CEF11E /* HomeViewController.swift in Sources */,
+				4B7BD6D828F765F200CEF11E /* ToiletListViewController.swift in Sources */,
 				4B72F36528FCB6DE00CD9DB8 /* ToiletDataService.swift in Sources */,
 				4B723AA528FE124E00430E43 /* CoreDataService.swift in Sources */,
 				4B42D6F028FF0D1E0030B83B /* TabBar.swift in Sources */,

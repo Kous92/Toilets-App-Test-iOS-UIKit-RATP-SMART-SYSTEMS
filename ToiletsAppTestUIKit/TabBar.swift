@@ -17,7 +17,7 @@ class TabBar: UITabBarController {
     }
     
     func setupViewControllers() {
-        let home = HomeViewController()
+        let home = ToiletListViewController()
         let map = ToiletMapViewController()
         guard let container = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer else {
             return
