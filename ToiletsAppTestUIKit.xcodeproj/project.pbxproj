@@ -15,11 +15,20 @@
 		4B3759B228F962E4002F633B /* ToiletTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3759B128F962E4002F633B /* ToiletTableViewCell.swift */; };
 		4B3759B528F96460002F633B /* UIViewPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3759B428F96460002F633B /* UIViewPreview.swift */; };
 		4B3759B728F96470002F633B /* UIViewControllerPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3759B628F96470002F633B /* UIViewControllerPreview.swift */; };
+		4B42D6ED28FEBC9B0030B83B /* ToiletEntityMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B42D6EC28FEBC9B0030B83B /* ToiletEntityMethods.swift */; };
+		4B42D6F028FF0D1E0030B83B /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B42D6EF28FF0D1E0030B83B /* TabBar.swift */; };
+		4B42D6F228FF0F160030B83B /* ToiletMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B42D6F128FF0F160030B83B /* ToiletMapViewController.swift */; };
+		4B723AA328FE0AF900430E43 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B723AA228FE0AF900430E43 /* SplashScreenViewController.swift */; };
+		4B723AA528FE124E00430E43 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B723AA428FE124E00430E43 /* CoreDataService.swift */; };
+		4B723AA828FE130300430E43 /* Toilets.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4B723AA628FE130300430E43 /* Toilets.xcdatamodeld */; };
+		4B72F36328FC96DA00CD9DB8 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B72F36228FC96DA00CD9DB8 /* Coordinator.swift */; };
+		4B72F36528FCB6DE00CD9DB8 /* ToiletDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B72F36428FCB6DE00CD9DB8 /* ToiletDataService.swift */; };
 		4B7BD6D428F765F200CEF11E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7BD6D328F765F200CEF11E /* AppDelegate.swift */; };
 		4B7BD6D628F765F200CEF11E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7BD6D528F765F200CEF11E /* SceneDelegate.swift */; };
 		4B7BD6D828F765F200CEF11E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7BD6D728F765F200CEF11E /* HomeViewController.swift */; };
 		4B7BD6DD28F765F300CEF11E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B7BD6DC28F765F300CEF11E /* Assets.xcassets */; };
 		4B7BD6E028F765F300CEF11E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B7BD6DE28F765F300CEF11E /* LaunchScreen.storyboard */; };
+		4BE80BA928FF6818007331C1 /* GPSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE80BA828FF6818007331C1 /* GPSService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +40,14 @@
 		4B3759B128F962E4002F633B /* ToiletTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToiletTableViewCell.swift; sourceTree = "<group>"; };
 		4B3759B428F96460002F633B /* UIViewPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewPreview.swift; sourceTree = "<group>"; };
 		4B3759B628F96470002F633B /* UIViewControllerPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerPreview.swift; sourceTree = "<group>"; };
+		4B42D6EC28FEBC9B0030B83B /* ToiletEntityMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToiletEntityMethods.swift; sourceTree = "<group>"; };
+		4B42D6EF28FF0D1E0030B83B /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		4B42D6F128FF0F160030B83B /* ToiletMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToiletMapViewController.swift; sourceTree = "<group>"; };
+		4B723AA228FE0AF900430E43 /* SplashScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
+		4B723AA428FE124E00430E43 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		4B723AA728FE130300430E43 /* ToiletEntity.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ToiletEntity.xcdatamodel; sourceTree = "<group>"; };
+		4B72F36228FC96DA00CD9DB8 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		4B72F36428FCB6DE00CD9DB8 /* ToiletDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToiletDataService.swift; sourceTree = "<group>"; };
 		4B7BD6D028F765F200CEF11E /* ToiletsAppTestUIKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToiletsAppTestUIKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B7BD6D328F765F200CEF11E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4B7BD6D528F765F200CEF11E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -38,6 +55,7 @@
 		4B7BD6DC28F765F300CEF11E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B7BD6DF28F765F300CEF11E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4B7BD6E128F765F300CEF11E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4BE80BA828FF6818007331C1 /* GPSService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPSService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +75,9 @@
 				4B13FC9628FB6F3E00C0F994 /* NetworkService.swift */,
 				4B13FC9828FB6F8E00C0F994 /* APIError.swift */,
 				4B13FC9C28FB711000C0F994 /* APIService.swift */,
+				4B72F36428FCB6DE00CD9DB8 /* ToiletDataService.swift */,
+				4B723AA428FE124E00430E43 /* CoreDataService.swift */,
+				4BE80BA828FF6818007331C1 /* GPSService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -68,6 +89,21 @@
 				4B3759B628F96470002F633B /* UIViewControllerPreview.swift */,
 			);
 			path = UIKitPreviews;
+			sourceTree = "<group>";
+		};
+		4B42D6EE28FF06520030B83B /* ToiletList */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ToiletList;
+			sourceTree = "<group>";
+		};
+		4B72F36128FC96CA00CD9DB8 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				4B72F36228FC96DA00CD9DB8 /* Coordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		4B7BD6C728F765F200CEF11E = {
@@ -89,6 +125,8 @@
 		4B7BD6D228F765F200CEF11E /* ToiletsAppTestUIKit */ = {
 			isa = PBXGroup;
 			children = (
+				4B42D6EE28FF06520030B83B /* ToiletList */,
+				4B72F36128FC96CA00CD9DB8 /* Coordinator */,
 				4B13FC9528FB6F2600C0F994 /* Service */,
 				4BB0873A28FA0CD000D4454D /* Model */,
 				4B3759B328F96441002F633B /* UIKitPreviews */,
@@ -100,6 +138,10 @@
 				4B7BD6E128F765F300CEF11E /* Info.plist */,
 				4B3759B128F962E4002F633B /* ToiletTableViewCell.swift */,
 				4B13FC9E28FB7B1200C0F994 /* ToiletViewModel.swift */,
+				4B723AA228FE0AF900430E43 /* SplashScreenViewController.swift */,
+				4B723AA628FE130300430E43 /* Toilets.xcdatamodeld */,
+				4B42D6EF28FF0D1E0030B83B /* TabBar.swift */,
+				4B42D6F128FF0F160030B83B /* ToiletMapViewController.swift */,
 			);
 			path = ToiletsAppTestUIKit;
 			sourceTree = "<group>";
@@ -108,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				4B13FC9A28FB70AD00C0F994 /* DataOutput.swift */,
+				4B42D6EC28FEBC9B0030B83B /* ToiletEntityMethods.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -184,15 +227,24 @@
 			files = (
 				4B13FC9B28FB70AD00C0F994 /* DataOutput.swift in Sources */,
 				4B3759B528F96460002F633B /* UIViewPreview.swift in Sources */,
+				4B723AA328FE0AF900430E43 /* SplashScreenViewController.swift in Sources */,
 				4B3759B728F96470002F633B /* UIViewControllerPreview.swift in Sources */,
 				4B3759B228F962E4002F633B /* ToiletTableViewCell.swift in Sources */,
+				4B42D6ED28FEBC9B0030B83B /* ToiletEntityMethods.swift in Sources */,
+				4BE80BA928FF6818007331C1 /* GPSService.swift in Sources */,
 				4B7BD6D828F765F200CEF11E /* HomeViewController.swift in Sources */,
+				4B72F36528FCB6DE00CD9DB8 /* ToiletDataService.swift in Sources */,
+				4B723AA528FE124E00430E43 /* CoreDataService.swift in Sources */,
+				4B42D6F028FF0D1E0030B83B /* TabBar.swift in Sources */,
 				4B7BD6D428F765F200CEF11E /* AppDelegate.swift in Sources */,
 				4B13FC9D28FB711000C0F994 /* APIService.swift in Sources */,
 				4B13FC9928FB6F8E00C0F994 /* APIError.swift in Sources */,
+				4B72F36328FC96DA00CD9DB8 /* Coordinator.swift in Sources */,
 				4B7BD6D628F765F200CEF11E /* SceneDelegate.swift in Sources */,
 				4B13FC9F28FB7B1200C0F994 /* ToiletViewModel.swift in Sources */,
+				4B42D6F228FF0F160030B83B /* ToiletMapViewController.swift in Sources */,
 				4B13FC9728FB6F3E00C0F994 /* NetworkService.swift in Sources */,
+				4B723AA828FE130300430E43 /* Toilets.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +454,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4B723AA628FE130300430E43 /* Toilets.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4B723AA728FE130300430E43 /* ToiletEntity.xcdatamodel */,
+			);
+			currentVersion = 4B723AA728FE130300430E43 /* ToiletEntity.xcdatamodel */;
+			path = Toilets.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4B7BD6C828F765F200CEF11E /* Project object */;
 }

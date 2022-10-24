@@ -8,8 +8,12 @@
 import Foundation
 
 final class NetworkService: APIService {
+    deinit {
+        print("Service réseau désactivé")
+    }
+    
     func fetch<T: Codable>(completion: @escaping (Result<T, APIError>) -> ()) {
-        guard let url = URL(string: "https://data.ratp.fr/api/records/1.0/search/?dataset=sanisettesparis2011&start=0&rows=100") else {
+        guard let url = URL(string: "https://data.ratp.fr/api/records/1.0/search/?dataset=sanisettesparis2011&start=0&rows=1000") else {
             completion(.failure(.invalidURL))
             return
         }

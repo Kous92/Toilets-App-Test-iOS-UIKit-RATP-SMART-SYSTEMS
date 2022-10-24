@@ -72,6 +72,7 @@ class ToiletTableViewCell: UITableViewCell {
         openingLabel.text = viewModel.opening
         reducedMobilityLabel.text = "Accessible PMR: " + viewModel.reducedMobility
         distanceLabel.text = viewModel.distance
+        
     }
     
     private func buildViewHierarchy() {
@@ -80,25 +81,23 @@ class ToiletTableViewCell: UITableViewCell {
         cellView.addSubview(addressLabel)
         cellView.addSubview(openingLabel)
         cellView.addSubview(reducedMobilityLabel)
-        // cellView.addSubview(distanceLabel)
+        cellView.addSubview(distanceLabel)
     }
     
     private func setConstraints() {
         
         cellView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
-        cellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        cellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
+        cellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
+        cellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10).isActive = true
+        cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         
         toiletImage.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10).isActive = true
         toiletImage.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 10).isActive = true
-        toiletImage.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        toiletImage.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        toiletImage.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        toiletImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
         
-        /*
         distanceLabel.centerXAnchor.constraint(equalTo: toiletImage.centerXAnchor).isActive = true
-        distanceLabel.topAnchor.constraint(equalTo: toiletImage.bottomAnchor, constant: 10).isActive = true
-         */
+        distanceLabel.centerYAnchor.constraint(equalTo: reducedMobilityLabel.centerYAnchor).isActive = true
         
         addressLabel.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10).isActive = true
         addressLabel.leadingAnchor.constraint(equalTo: toiletImage.trailingAnchor, constant: 10).isActive = true
@@ -116,6 +115,8 @@ class ToiletTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = .clear
+        self.backgroundView = UIView()
         buildViewHierarchy()
         setConstraints()
     }

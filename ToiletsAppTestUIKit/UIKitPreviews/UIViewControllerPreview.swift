@@ -10,6 +10,12 @@ import Foundation
 #if canImport(SwiftUI) && DEBUG
 import SwiftUI
 
+let deviceNames: [String] = [
+    "iPhone SE (3rd generation)",
+    "iPhone 14 Pro",
+    "iPad Pro (9.7-inch)"
+]
+
 struct UIViewControllerPreview<ViewController: UIViewController>: UIViewControllerRepresentable {
     let viewController: ViewController
 

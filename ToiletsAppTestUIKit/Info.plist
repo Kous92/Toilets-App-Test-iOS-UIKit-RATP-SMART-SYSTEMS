@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Afin de permettre de calculer la distance de votre position aux toilettes et de vous positionner sur la carte, veuillez autoriser l&apos;accès au service de localisation.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Afin de permettre de calculer la distance de votre position aux toilettes et de vous positionner sur la carte, veuillez autoriser l&apos;accès au service de localisation.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

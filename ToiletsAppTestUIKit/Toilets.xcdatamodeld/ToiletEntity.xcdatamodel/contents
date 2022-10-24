@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ToiletEntity" representedClassName="ToiletEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="accesPmr" optional="YES" attributeType="String"/>
+        <attribute name="adresse" optional="YES" attributeType="String"/>
+        <attribute name="arrondissement" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" customClassName="Int"/>
+        <attribute name="coordinates" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[Double]"/>
+        <attribute name="gestionnaire" optional="YES" attributeType="String"/>
+        <attribute name="horaires" optional="YES" attributeType="String"/>
+        <attribute name="relaisBebe" optional="YES" attributeType="String"/>
+        <attribute name="source" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="urlFicheEquipement" optional="YES" attributeType="String"/>
+    </entity>
+</model>

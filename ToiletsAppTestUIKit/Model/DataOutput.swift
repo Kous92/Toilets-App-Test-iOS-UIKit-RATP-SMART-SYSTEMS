@@ -9,7 +9,7 @@ import Foundation
 // MARK: - Welcome
 struct DataOutput: Codable {
     var parameters: Parameters
-    var records: [Record]?
+    var records: [Toilet]?
 }
 
 // MARK: - Parameters
@@ -18,8 +18,8 @@ struct Parameters: Codable {
     var rows: Int
 }
 
-// MARK: - Record
-struct Record: Codable {
+// MARK: - Toilet
+struct Toilet: Codable {
     var fields: Fields?
 }
 
@@ -30,12 +30,17 @@ struct Fields: Codable {
     var arrondissement: Int?
     var geoPoint2D: [Double]?
     var adresse, type: String?
+    var urlFicheEquipement: String?
+    var gestionnaire: String?
+    var source: String?
+    var relaisBebe: String?
+    var distance: Double?
 
     enum CodingKeys: String, CodingKey {
-        case horaire
+        case horaire, adresse, type, gestionnaire, source, arrondissement, distance
         case accesPmr = "acces_pmr"
-        case arrondissement
         case geoPoint2D = "geo_point_2d"
-        case adresse, type
+        case urlFicheEquipement = "url_fiche_equipement"
+        case relaisBebe = "relais_bebe"
     }
 }
