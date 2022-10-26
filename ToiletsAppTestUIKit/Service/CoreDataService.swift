@@ -11,12 +11,12 @@ import UIKit
 
 class CoreDataService {
     static let sharedInstance = CoreDataService()
-    private init(){}
+    init(){}
     
     private let container: NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
     private let fetchRequest = NSFetchRequest<ToiletEntity>(entityName: "ToiletEntity")
     
-    func saveData(with toilets: [Toilet]) {
+    func saveData(with toilets: [Toilet], completion: (() -> Void)?) {
         // Dans une tâche de fond
         self.container?.performBackgroundTask { [weak self] (context) in
             print("Lancement de la sauvegarde des données téléchargées.")
@@ -26,7 +26,7 @@ class CoreDataService {
                 self?.deleteAllSavedToiletsData(context: context)
             }
 
-            self?.saveToiletsDataLocally(with: toilets, context: context)
+            self?.saveToiletsDataLocally(with: toilets, context: context, completion: completion)
             print("Sauvegarde terminée.")
         }
     }
@@ -45,7 +45,7 @@ class CoreDataService {
     }
     
     
-    private func saveToiletsDataLocally(with toilets: [Toilet], context: NSManagedObjectContext) {
+    private func saveToiletsDataLocally(with toilets: [Toilet], context: NSManagedObjectContext, completion: (() -> Void)?) {
         print("-> Sauvegarde de \(toilets.count) toilettes.")
         
         context.perform {
@@ -69,13 +69,12 @@ class CoreDataService {
             } catch {
                 fatalError("Failure to save context: \(error)")
             }
+            
+            completion?()
         }
     }
     
     func checkToilets(context: NSManagedObjectContext) -> Int {
-        let fetchRequest: NSFetchRequest<ToiletEntity>
-        fetchRequest = ToiletEntity.fetchRequest()
-        
         var count = 0
         
         do {
@@ -96,7 +95,7 @@ class CoreDataService {
         do {
             // Peform Fetch Request
             toilets = try context.fetch(fr)
-            print(toilets)
+            // print(toilets)
             
             if toilets.count > 0 {
                 print("-> Nombre de toilettes dans la base de données: \(toilets.count)")

@@ -8,17 +8,18 @@
 import UIKit
 import CoreData
 import CoreLocation
+import Combine
 
 class ToiletListViewController: UIViewController {
-    private var toilets = [Toilet]()
-    private var filteredToilets = [Toilet]()
-    var managedObjectContext: NSManagedObjectContext?
     private var pmrFilterActive = false
+    private var sortDistanceActive = false
+    var viewModel: ToiletListViewModel?
+    private var subscriptions = Set<AnyCancellable>()
     
     private lazy var filterView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .green
+        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
         return view
     }()
     
@@ -37,7 +38,7 @@ class ToiletListViewController: UIViewController {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(sortDistance(_:)), for: .touchUpInside)
-        button.setTitle("Proximité", for: .normal)
+        button.setTitle("Plus proches", for: .normal)
         button.backgroundColor = .blue
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 8
@@ -52,27 +53,34 @@ class ToiletListViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.refreshControl = UIRefreshControl()
         tableView.refreshControl?.addTarget(self, action: #selector(refreshToiletData(_:)), for: .valueChanged)
+        tableView.dataSource = self
+        tableView.delegate = self
         return tableView
+    }()
+    
+    private lazy var loadingSpinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.style = .medium
+        spinner.transform = CGAffineTransform(scaleX: 2, y: 2)
+        spinner.hidesWhenStopped = true
+        return spinner
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // view.backgroundColor = .blue
-        tableView.dataSource = self
-        tableView.delegate = self
-        // tableView.backgroundColor = .none
-        tableView.backgroundColor = .darkGray
         buildViewHierarchy()
         setConstraints()
-        // GPSService.shared.fetchLocation()
-        
+        setBindings()
         getData()
     }
     
     private func buildViewHierarchy() {
         view.addSubview(filterView)
         view.addSubview(tableView)
+        view.addSubview(loadingSpinner)
         filterView.addSubview(reducedMobilityFilterButton)
+        filterView.addSubview(distanceSortButton)
     }
     
     private func setConstraints() {
@@ -86,127 +94,96 @@ class ToiletListViewController: UIViewController {
         tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         
+        loadingSpinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loadingSpinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
         reducedMobilityFilterButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         reducedMobilityFilterButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
         reducedMobilityFilterButton.centerYAnchor.constraint(equalTo: filterView.centerYAnchor).isActive = true
         reducedMobilityFilterButton.leadingAnchor.constraint(equalTo: filterView.leadingAnchor, constant: 10).isActive = true
+        
+        distanceSortButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        distanceSortButton.widthAnchor.constraint(equalToConstant: 110).isActive = true
+        distanceSortButton.centerYAnchor.constraint(equalTo: filterView.centerYAnchor).isActive = true
+        distanceSortButton.leadingAnchor.constraint(equalTo: reducedMobilityFilterButton.trailingAnchor, constant: 10).isActive = true
+    }
+    
+    private func setBindings() {
+        viewModel?.isLoadingPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isLoading in
+                if isLoading {
+                    self?.loadingSpinner.startAnimating()
+                    self?.loadingSpinner.isHidden = false
+                    self?.tableView.isHidden = true
+                }
+            }.store(in: &subscriptions)
+        
+        viewModel?.updateResultPublisher
+            .receive(on: RunLoop.main)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    print("OK: terminé")
+                case .failure(let error):
+                    print("Erreur reçue: \(error.rawValue)")
+                }
+            } receiveValue: { [weak self] updated in
+                self?.loadingSpinner.stopAnimating()
+                
+                if updated {
+                    self?.tableView.reloadData()
+                    self?.tableView.isHidden = false
+                } else {
+                    print("Pas de contenu")
+                }
+            }.store(in: &subscriptions)
     }
 }
 
 extension ToiletListViewController {
-    
     func getData() {
-        guard let context = managedObjectContext else {
-            print("Erreur récupération toilettes")
-            return
-        }
-        
-        // Récupération avec CoreData
-        if CoreDataService.sharedInstance.checkToilets(context: context) > 0 {
-            print("Tentative avec Core Data")
-            do {
-                let toiletEntities = try ToiletEntity.fetchAllToilets(context: context)
-                // print(toiletEntities)
-                
-                for toilet in toiletEntities {
-                    toilets.append(
-                        Toilet(fields:
-                                Fields(
-                                    horaire: toilet.horaires,
-                                    accesPmr: toilet.accesPmr,
-                                    arrondissement: Int(toilet.arrondissement),
-                                    geoPoint2D: toilet.coordinates,
-                                    adresse: toilet.adresse,
-                                    type: toilet.type,
-                                    urlFicheEquipement: toilet.urlFicheEquipement,
-                                    gestionnaire: toilet.gestionnaire,
-                                    source: toilet.source,
-                                    relaisBebe: toilet.relaisBebe
-                                )
-                              )
-                    )
-                }
-                
-                filteredToilets = toilets
-            } catch {
-                print("Échec")
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.tableView.reloadData()
-            }
-            
-            return
-        }
-        
-        let service: APIService = NetworkService()
-        service.fetch { [weak self] (response: Result<DataOutput, APIError>) in
-            switch response {
-            case .success(let data):
-                self?.toilets = data.records ?? []
-                
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                }
-            case .failure(let error):
-                print("ERREUR: " + error.rawValue)
-            }
-        }
+        print("ToiletListViewModel lancé (init)")
+        viewModel?.getData()
     }
 }
 
 extension ToiletListViewController {
     @objc private func refreshToiletData(_ sender: Any) {
-        let service: APIService = NetworkService()
-        service.fetch { [weak self] (response: Result<DataOutput, APIError>) in
-            switch response {
-            case .success(let data):
-                self?.toilets = data.records ?? []
-                self?.filteredToilets = data.records ?? []
-                
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                    self?.tableView.refreshControl?.endRefreshing()
-                }
-            case .failure(let error):
-                print("ERREUR: " + error.rawValue)
-            }
-        }
+        print("ToiletListViewModel lancé (refresh)")
+        viewModel?.getData()
     }
 }
 
 extension ToiletListViewController {
     @objc func setReducedMobilityFilter(_ sender: Any) {
         if pmrFilterActive == false {
-            reducedMobilityFilterButton.backgroundColor = .red
+            reducedMobilityFilterButton.backgroundColor = UIColor(named: "ratp_jade_green")
             pmrFilterActive = true
         } else {
             reducedMobilityFilterButton.backgroundColor = .blue
             pmrFilterActive = false
         }
         
-        setPmrFilter()
-    }
-    
-    private func setPmrFilter() {
-        if pmrFilterActive == true {
-            filteredToilets = toilets.filter { $0.fields?.accesPmr == "Oui" }
-        } else {
-            filteredToilets = toilets
-        }
-        
-        tableView.reloadData()
+        viewModel?.filterPmrData(isEnabled: pmrFilterActive)
     }
     
     @objc func sortDistance(_ sender: Any) {
+        if sortDistanceActive == false {
+            distanceSortButton.backgroundColor = UIColor(named: "ratp_jade_green")
+            sortDistanceActive = true
+        } else {
+            distanceSortButton.backgroundColor = .blue
+            sortDistanceActive = false
+        }
         
+        viewModel?.sortByDistance(isEnabled: sortDistanceActive)
     }
 }
 
 extension ToiletListViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // print("Toilettes: \(toilets.count)")
-        return filteredToilets.count
+        return viewModel?.filteredToiletViewModels.count ?? 0
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -214,30 +191,9 @@ extension ToiletListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let toilet = filteredToilets[indexPath.row].fields
-        if let coordinates = toilet?.geoPoint2D {
-            let toiletPosition = CLLocation(latitude: coordinates.first!, longitude: coordinates.last!)
-            var distanceOutput = "??"
-            
-            print("-> Récupération de la distance")
-            if let distance = GPSService.shared.getActualPosition()?.distance(from: toiletPosition) {
-                distanceOutput = distance < 1000 ? "\(distance) m" : "\(String(format:"%.02f", distance / 1000)) km"
-                
-                print(" -> Succès: \(distance)")
-            } else {
-                print(" -> Échec")
-            }
-            
-            cell.configure(with: ToiletViewModel(address: toilet?.adresse ?? "Adresse indisponible", opening: toilet?.horaire ?? "Horaires indisponibles", reducedMobility: toilet?.accesPmr ?? "Non", distance: distanceOutput))
-        } else {
-            cell.configure(with: ToiletViewModel(address: toilet?.adresse ?? "Adresse indisponible", opening: toilet?.horaire ?? "Horaires indisponibles", reducedMobility: toilet?.accesPmr ?? "Non", distance: "??"))
+        if let viewModel = viewModel?.filteredToiletViewModels[indexPath.row] {
+            cell.configure(with: viewModel)
         }
-        
-        
-        
-        /*
-         cell.configure(with: ToiletViewModel(address: "115 avenue des Champs Élysées, 75008 Paris", opening: "24h / 24h", reducedMobility: "Oui", distance: "10 km"))
-         */
         
         return cell
     }
@@ -269,10 +225,6 @@ struct ViewControllerPreview: PreviewProvider {
             // Mode sombre (dark mode)
             UIViewControllerPreview {
                 let vc = ToiletListViewController()
-                guard let container = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer else {
-                    return vc
-                }
-                vc.managedObjectContext = container.viewContext
                 return vc
             }
             .previewDevice(PreviewDevice(rawValue: deviceName))

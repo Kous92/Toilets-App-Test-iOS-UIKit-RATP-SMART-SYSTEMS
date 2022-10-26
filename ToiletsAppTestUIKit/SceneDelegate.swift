@@ -41,7 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self?.mainCoordinator?.start()
          */
         
-        window.rootViewController = SplashScreenViewController() // Your initial view controller.
+        window.rootViewController = TabBar() // Your initial view controller.
         window.makeKeyAndVisible()
         self.window = window
     }

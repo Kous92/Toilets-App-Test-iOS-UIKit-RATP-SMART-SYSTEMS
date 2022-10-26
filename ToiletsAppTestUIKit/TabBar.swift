@@ -22,7 +22,8 @@ class TabBar: UITabBarController {
         guard let container = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer else {
             return
         }
-        home.managedObjectContext = container.viewContext
+        
+        home.viewModel = ToiletListViewModel(service: ToiletDataService())
         map.managedObjectContext = container.viewContext
         
         self.viewControllers = [

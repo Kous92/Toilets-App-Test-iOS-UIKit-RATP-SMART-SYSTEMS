@@ -71,8 +71,7 @@ class ToiletTableViewCell: UITableViewCell {
         addressLabel.text = viewModel.address
         openingLabel.text = viewModel.opening
         reducedMobilityLabel.text = "Accessible PMR: " + viewModel.reducedMobility
-        distanceLabel.text = viewModel.distance
-        
+        distanceLabel.text = viewModel.getDistanceFormatted()
     }
     
     private func buildViewHierarchy() {
@@ -150,7 +149,7 @@ struct CustomTableViewCellPreview: PreviewProvider {
          */
         UIViewPreview {
             let view = ToiletTableViewCell()
-            view.configure(with: ToiletViewModel(address: "2 AVENUE DE WAGRAM, 75017 Paris", opening: "24h/24", reducedMobility: "Oui", distance: "5 km"))
+            // view.configure(with: ToiletViewModel(address: "2 AVENUE DE WAGRAM, 75017 Paris", opening: "24h/24", reducedMobility: "Oui", distance: "5 km"))
             return view
         }
         .previewLayout(PreviewLayout.sizeThatFits)

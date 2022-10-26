@@ -6,7 +6,15 @@
 //
 
 import Foundation
+import CoreLocation
 
 protocol APIService {
-    func fetch<T: Codable>(completion: @escaping (Result<T, APIError>) -> ())
+    func fetch(completion: @escaping (Result<[Toilet], APIError>) -> ())
+    func getUserPosition() -> CLLocation?
+}
+
+extension APIService {
+    func getUserPosition() -> CLLocation? {
+        return nil
+    }
 }

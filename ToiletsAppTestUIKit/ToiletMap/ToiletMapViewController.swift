@@ -53,6 +53,7 @@ extension ToiletMapViewController {
             return
         }
         
+        /*
         // Récupération avec CoreData
         if CoreDataService.sharedInstance.checkToilets(context: context) > 0 {
             print("Tentative avec Core Data")
@@ -101,6 +102,7 @@ extension ToiletMapViewController {
                 print("ERREUR: " + error.rawValue)
             }
         }
+         */
     }
     
     private func initMap() {

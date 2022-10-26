@@ -9,8 +9,6 @@ import Foundation
 import CoreLocation
 
 final class GPSService: NSObject {
-    static let shared = GPSService()
-    
     private var actualPosition: (x: Double, y: Double)?
     private var availableLocationService = false
     
