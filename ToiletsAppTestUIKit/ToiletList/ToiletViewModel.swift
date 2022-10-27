@@ -27,7 +27,6 @@ final class ToiletViewModel {
     }
     
     private func setDistance() {
-        print("-> Récupération de la distance")
         guard let userPosition, let coordinates = toilet.fields?.geoPoint2D else {
             return
         }
@@ -42,5 +41,13 @@ final class ToiletViewModel {
         }
         
         return distance < 1000 ? "\(Int(distance)) m" : "\(String(format:"%.02f", distance / 1000)) km"
+    }
+    
+    func getCoordinates() -> CLLocationCoordinate2D? {
+        guard let coordinates = toilet.fields?.geoPoint2D else {
+            return nil
+        }
+        
+        return CLLocationCoordinate2D(latitude: coordinates[0], longitude: coordinates[1])
     }
 }

@@ -9,10 +9,13 @@ import UIKit
 import MapKit
 import CoreLocation
 import CoreData
+import Combine
 
 class ToiletMapViewController: UIViewController {
     private var toilets = [Toilet]()
     var managedObjectContext: NSManagedObjectContext?
+    var viewModel: ToiletMapViewModel?
+    private var subscriptions = Set<AnyCancellable>()
     
     private lazy var mapView: MKMapView = {
         let map = MKMapView()
@@ -22,15 +25,25 @@ class ToiletMapViewController: UIViewController {
         return map
     }()
     
+    private lazy var loadingSpinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.style = .medium
+        spinner.transform = CGAffineTransform(scaleX: 2, y: 2)
+        spinner.hidesWhenStopped = true
+        return spinner
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         buildViewHierarchy()
         setConstraints()
-        initMap()
+        setBindings()
         getData()
     }
     
     private func buildViewHierarchy() {
+        view.addSubview(loadingSpinner)
         view.addSubview(mapView)
     }
     
@@ -39,6 +52,40 @@ class ToiletMapViewController: UIViewController {
         mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         mapView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        
+        loadingSpinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loadingSpinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+    
+    private func setBindings() {
+        viewModel?.isLoadingPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isLoading in
+                if isLoading {
+                    self?.loadingSpinner.startAnimating()
+                    self?.loadingSpinner.isHidden = false
+                }
+            }.store(in: &subscriptions)
+        
+        viewModel?.updateResultPublisher
+            .receive(on: RunLoop.main)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    print("OK: terminé")
+                case .failure(let error):
+                    print("Erreur reçue: \(error.rawValue)")
+                }
+            } receiveValue: { [weak self] updated in
+                self?.loadingSpinner.stopAnimating()
+                
+                if updated {
+                    self?.mapView.isHidden = false
+                    self?.initAnnotations()
+                } else {
+                    print("Pas de contenu")
+                }
+            }.store(in: &subscriptions)
     }
 }
 
@@ -48,61 +95,8 @@ extension ToiletMapViewController {
     }
     
     func getData() {
-        guard let context = managedObjectContext else {
-            print("Erreur récupération toilettes")
-            return
-        }
-        
-        /*
-        // Récupération avec CoreData
-        if CoreDataService.sharedInstance.checkToilets(context: context) > 0 {
-            print("Tentative avec Core Data")
-            do {
-                let toiletEntities = try ToiletEntity.fetchAllToilets(context: context)
-                // print(toiletEntities)
-                
-                for toilet in toiletEntities {
-                    toilets.append(
-                        Toilet(fields:
-                                Fields(
-                                    horaire: toilet.horaires,
-                                    accesPmr: toilet.accesPmr,
-                                    arrondissement: Int(toilet.arrondissement),
-                                    geoPoint2D: toilet.coordinates,
-                                    adresse: toilet.adresse,
-                                    type: toilet.type,
-                                    urlFicheEquipement: toilet.urlFicheEquipement,
-                                    gestionnaire: toilet.gestionnaire,
-                                    source: toilet.source,
-                                    relaisBebe: toilet.relaisBebe
-                                )
-                              )
-                    )
-                }
-            } catch {
-                print("Échec")
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.initAnnotations()
-            }
-            return
-        }
-        
-        let service: APIService = NetworkService()
-        service.fetch { [weak self] (response: Result<DataOutput, APIError>) in
-            switch response {
-            case .success(let data):
-                self?.toilets = data.records ?? []
-                
-                DispatchQueue.main.async { [weak self] in
-                    self?.initAnnotations()
-                }
-            case .failure(let error):
-                print("ERREUR: " + error.rawValue)
-            }
-        }
-         */
+        print("ToiletMapViewModel lancé (init)")
+        viewModel?.getData()
     }
     
     private func initMap() {
@@ -116,18 +110,21 @@ extension ToiletMapViewController {
 
 extension ToiletMapViewController: MKMapViewDelegate {
     private func initAnnotations() {
-        toilets.forEach { toilet in
+        viewModel?.toiletViewModels.forEach{ toilet in
             let annotation = MKPointAnnotation()
-            annotation.title = toilet.fields?.adresse ?? "Toilettes"
+            annotation.title = toilet.address
+            annotation.subtitle = toilet.opening
             
-            guard let coordinates = toilet.fields?.geoPoint2D else {
+            guard let coordinates = toilet.getCoordinates() else {
                 print("Erreur, pas de coordonnées")
                 return
             }
             
-            annotation.coordinate = CLLocationCoordinate2D(latitude: coordinates[0], longitude: coordinates[1])
+            annotation.coordinate = coordinates
             mapView.addAnnotation(annotation)
         }
+        
+        initMap()
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

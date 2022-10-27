@@ -9,10 +9,7 @@ import Foundation
 import CoreData
 import UIKit
 
-class CoreDataService {
-    static let sharedInstance = CoreDataService()
-    init(){}
-    
+final class CoreDataService {
     private let container: NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
     private let fetchRequest = NSFetchRequest<ToiletEntity>(entityName: "ToiletEntity")
     

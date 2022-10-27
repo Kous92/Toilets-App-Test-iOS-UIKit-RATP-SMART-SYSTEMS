@@ -1,5 +1,5 @@
 //
-//  TabBar.swift
+//  MainTabBarContoller.swift
 //  ToiletsAppTestUIKit
 //
 //  Created by Koussaïla Ben Mamar on 18/10/2022.
@@ -7,11 +7,10 @@
 
 import UIKit
 
-class TabBar: UITabBarController {
-    
+class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        UITabBar.appearance().barTintColor = UIColor(named: "ratp_jade_green")
+        UITabBar.appearance().barTintColor = UIColor(named: "ratp_blue")
         tabBar.tintColor = .white
         setupViewControllers()
     }
@@ -19,12 +18,9 @@ class TabBar: UITabBarController {
     func setupViewControllers() {
         let home = ToiletListViewController()
         let map = ToiletMapViewController()
-        guard let container = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer else {
-            return
-        }
         
         home.viewModel = ToiletListViewModel(service: ToiletDataService())
-        map.managedObjectContext = container.viewContext
+        map.viewModel = ToiletMapViewModel(service: ToiletDataService())
         
         self.viewControllers = [
             createNavController(for: home, title: "Liste des toilettes", image: UIImage(systemName: "list.dash")!),

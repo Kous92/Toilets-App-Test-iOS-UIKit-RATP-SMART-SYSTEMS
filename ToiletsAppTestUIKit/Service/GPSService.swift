@@ -49,7 +49,6 @@ final class GPSService: NSObject {
             return nil
         }
         
-        print("Position actuelle: \(CLLocation(latitude: actualPosition.y, longitude: actualPosition.x))")
         return CLLocation(latitude: actualPosition.y, longitude: actualPosition.x)
     }
 }
