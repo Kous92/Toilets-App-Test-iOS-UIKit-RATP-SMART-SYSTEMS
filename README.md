@@ -1,6 +1,6 @@
 # Toilet App Test iOS (RATP SMART SYSTEMS)
 
-Le test technique iOS officiel de RATP Smart Systems pour intégrer les équipes des applications Mappy et Bonjour RATP. Réalisé par Koussaïla BEN MAMAR, octobre 2022.
+Le test technique iOS officiel de RATP Smart Systems pour intégrer les équipes des applications Mappy et Bonjour RATP. Réalisé par Koussaïla BEN MAMAR, 27 octobre 2022.
 
 ## Table des matières
 - [Sujet du test](#testGoal)
@@ -78,17 +78,45 @@ Dès que vous êtes prêts, envoyez-nous un lien vers le répertoire de votre ap
 
 ## <a name="solution"></a>Solution proposée
 
-Pour ce test technique, plusieurs challenges:
+Pour ce test technique, j'ai mis en place la liste avec 2 filtres (PMR et toilettes les plus proches de la position actuelle de l'utilisateur)
+
+Plusieurs challenges:
 - La couche de données (data layer)
 - L'architecture
+
+### Data layer
 
 Pour la partie du data layer, la principale difficulté est la synchronisation entre:
 - Les données téléchargées de l'API REST
 - La sauvegarde, le renouvellement et la récupération des données, en local.
 - La position GPS pour la distance
 
-Ici, mon idée est de faire la gestion des données en centralisant le tout dans une classe dédiée. Ce test est également une opportunité pour travailler avec **Core Data** afin de permettre l'utilisation de l'appli hors ligne (par la même occasion de réduire les calls de l'API REST, et donc la consommation de data notamment si on est en 3G/4G/5G).
+Ici, mon idée est de faire la gestion des données en centralisant le tout dans une classe dédiée, ici `ToiletDataService`. Ce test est également une opportunité pour travailler avec **Core Data** afin de permettre l'utilisation de l'appli hors ligne (par la même occasion de réduire les calls de l'API REST, et donc la consommation de data notamment si on est en 3G/4G/5G).
+
+La synchronisation des données se fait comme ceci:
+1. Téléchargement des données de l'API REST et parsing JSON en entités Swift.
+2. Vérification de l'existence de données sauvegardées en local.
+    + 2.1. S'il y en a, suppression de l'ensemble des données.
+    + 2.2. Parsing des données en entités locales avec **Core Data**, ici des objets de type `ToiletEntity`.
+    + 2.3. Sauvegarde de ces nouveaux objets dans la base de données locales.
+3. Récupération de la position GPS.
+4. Récupération de la liste des données et utilisation de la carte
+
+### Architecture
+
+Je propose ici l'architecture MVVM qui me permet d'isoler la logique métier de la vue. C'est dans les vues modèles de la liste et de la carte que le service dédié au niveau data layer sera appelé. Le data binding asynchrone s'effectue avec l'aide de **Combine** par le biais des `PassthroughSubject`. 
+
+### UI
+
+Au niveau UI, j'ai relevé le défi de ne pas utiliser de **Storyboard**, ni de **XIB**, avec **UIKit**. Par contre, je me suis aidé des Live Preview avec **SwiftUI** pour visualiser en temps réel mes ajouts lorsque je définis tous les composants avec du code seulement.
+
 
 ## <a name="futureImprovements"></a>Améliorations futures
 
-Si je dispose de davantage de temps.
+Si je dispose de davantage de temps:
+- Ajouter le `Coordinator` pour la gestion de la navigation afin de mieux respecter le principe de responsabilité unique du **SOLID**, passer donc en **MVVM-C**
+- Définir des mocks et mettre en place des tests unitaires.
+- Améliorer l'UI: annotations personnalisés dans la carte, plus d'options de filtrage, les détails de chaque toilettes,...
+- Refactoring pour mieux respecter si ce n'est pas encore le cas: **KISS, DRY, YAGNI**
+
+Toute remarque constructive lors de la review et tout conseil pour implémenter les améliorations, l'architecture,... seront les bienvenus :)
